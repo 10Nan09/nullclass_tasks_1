@@ -1,83 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internship Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Dashboard</title>
   <style>
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f4f6f9, #dbeafe); /* light gradient */
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #f5f5f5;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 20px;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
 
     h1 {
       margin-bottom: 20px;
-      color: #1e3a8a; /* dark blue */
-      text-align: center;
+      font-size: 2.2rem;
+      color: #ffcc00;
     }
 
-    .tableauPlaceholder {
-      width: 90%;
-      max-width: 1000px;
-      border: 2px solid #e5e7eb;
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 10px;
+    #dashboard {
+      display: none;
+    }
+
+    #closed {
+      display: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6666;
+      margin-top: 40px;
+    }
+
+    canvas {
+      background: #222;
+      border-radius: 10px;
+      padding: 15px;
     }
   </style>
 </head>
 <body>
-  <h1>📊 Internship Dashboard</h1>
+  <div class="container">
+    <h1>📊 Professional Dashboard</h1>
 
-  <div class='tableauPlaceholder' id='viz1758212189865' style='position: relative'>
-    <noscript>
-      <a href='#'>
-        <img alt='Internship Trends by Preference & Work Type'
-          src='https://public.tableau.com/static/images/ta/tasks_1_17582120934060/Sheet1/1_rss.png'
-          style='border: none' />
-      </a>
-    </noscript>
-    <object class='tableauViz' style='display:none;'>
-      <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-      <param name='embed_code_version' value='3' />
-      <param name='site_root' value='' />
-      <param name='name' value='tasks_1_17582120934060/Sheet1' />
-      <param name='tabs' value='no' />
-      <param name='toolbar' value='yes' />
-      <param name='static_image'
-        value='https://public.tableau.com/static/images/ta/tasks_1_17582120934060/Sheet1/1.png' />
-      <param name='animate_transition' value='yes' />
-      <param name='display_static_image' value='yes' />
-      <param name='display_spinner' value='yes' />
-      <param name='display_overlay' value='yes' />
-      <param name='display_count' value='yes' />
-      <param name='language' value='en-US' />
-      <param name='filter' value='publish=yes' />
-    </object>
+    <!-- Dashboard section -->
+    <div id="dashboard">
+      <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Restricted time message -->
+    <div id="closed">
+      ⏳ Dashboard available only between <br />
+      <strong>3 PM – 5 PM IST</strong>
+    </div>
   </div>
 
-  <script type='text/javascript'>
-    var divElement = document.getElementById('viz1758212189865');
-    var vizElement = divElement.getElementsByTagName('object')[0];
-    vizElement.style.width = '100%';
-    vizElement.style.height = (divElement.offsetWidth * 0.65) + 'px'; // smaller height for neat fit
-    var scriptElement = document.createElement('script');
-    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);
-
-    // Time restriction: hide after 10 mins
-    setTimeout(() => {
-      divElement.style.display = 'none';
-      alert("⏳ Dashboard session expired. Please reload the page.");
-    }, 10 * 60 * 1000);
-  </script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

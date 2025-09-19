@@ -1,75 +1,71 @@
-// Time check (3PM – 5PM IST)
-function isAllowedTime() {
+function checkTimeRestriction() {
   const now = new Date();
-  let istHour = now.getUTCHours() + 5;
-  let istMinute = now.getUTCMinutes() + 30;
-  if (istMinute >= 60) {
-    istHour += 1;
-    istMinute -= 60;
+  const hour = now.getHours();
+
+  const dashboard = document.getElementById("dashboard");
+  const closed = document.getElementById("closed");
+
+  // Allowed Time: 3 PM (15) to 5 PM (17)
+  if (hour >= 15 && hour < 17) {
+    dashboard.style.display = "block";
+    closed.style.display = "none";
+    renderChart();
+  } else {
+    dashboard.style.display = "none";
+    closed.style.display = "block";
   }
-  if (istHour >= 24) istHour -= 24;
-  return istHour >= 15 && istHour < 17; // 3PM to 5PM
 }
 
-// If not allowed time → show message
-if (!isAllowedTime()) {
-  document.getElementById("message").innerText =
-    "⚠ Chart available only between 3PM - 5PM IST";
-} else {
-  // Parse CSV
-  Papa.parse("job_descriptions.csv", {
-    download: true,
-    header: true,
-    complete: function(results) {
-      const data = results.data;
+function renderChart() {
+  const ctx = document.getElementById("myChart").getContext("2d");
 
-      // Apply filters
-      const filtered = data.filter(job =>
-        job["Work Type"] &&
-        job["Work Type"].trim() === "Intern" &&
-        parseFloat(job.latitude) < 10 &&
-        job.Country && !/^[ABCD]/i.test(job.Country.trim()) &&
-        job["Job Title"] && job["Job Title"].trim().length <= 10 &&
-        job["Company Size"] && parseInt(job["Company Size"]) < 50000
-      );
-
-      // Group by Preference
-      const counts = {};
-      filtered.forEach(job => {
-        const pref = job.Preference ? job.Preference.trim() : "Unknown";
-        counts[pref] = (counts[pref] || 0) + 1;
-      });
-
-      const labels = Object.keys(counts);
-      const values = Object.values(counts);
-
-      // If no data after filter
-      if (labels.length === 0) {
-        document.getElementById("message").innerText =
-          "⚠ No matching data after filters";
-        return;
-      }
-
-      // Draw Chart
-      const ctx = document.getElementById("myChart").getContext("2d");
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            label: "Intern Count",
-            data: values,
-            backgroundColor: "rgba(75, 192, 192, 0.7)"
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      datasets: [
+        {
+          label: "Visitors",
+          data: [120, 190, 75, 220, 150, 180],
+          backgroundColor: "rgba(255, 204, 0, 0.7)",
+          borderColor: "#ffcc00",
+          borderWidth: 2,
+          borderRadius: 8
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#f5f5f5",
+            font: {
+              size: 14,
+              weight: "bold"
+            }
           }
         }
-      });
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: "#f5f5f5",
+            font: { size: 12 }
+          },
+          grid: { color: "rgba(255,255,255,0.1)" }
+        },
+        y: {
+          ticks: {
+            color: "#f5f5f5",
+            font: { size: 12 }
+          },
+          grid: { color: "rgba(255,255,255,0.1)" }
+        }
+      }
     }
   });
 }
 
+// Check restriction when page loads
+checkTimeRestriction();
