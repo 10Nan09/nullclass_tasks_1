@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internship Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+      /* Smooth gradient */
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      background-attachment: fixed; /* prevent repeat/banding */
+      background-size: cover;       /* fill full screen smoothly */
+
+      color: #fff;
+      text-align: center;
+    }
+
+    h2 {
+      padding: 20px;
+      margin: 0;
+      color: #ffcc00; /* Highlight heading */
+    }
+
+    .tableauContainer {
+      width: 90%;
+      max-width: 1200px;
+      margin: 30px auto;
+      background: rgba(0, 0, 0, 0.6); /* Transparent black bg */
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      display: none; /* hide initially */
+    }
+
+    #closed {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6666;
+      margin-top: 50px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>📊 Internship Trends by Preference & Work Type</h2>
+
+  <!-- Tableau Embed Code Start -->
+  <div class="tableauContainer" id="dashboard">
+    <div class='tableauPlaceholder' id='viz1758212189865' style='position: relative'>
+      <noscript>
+        <a href='#'>
+          <img alt='Internship Trends by Preference & Work Type ' 
+               src='https://public.tableau.com/static/images/ta/tasks_1_17582120934060/Sheet1/1_rss.png' 
+               style='border: none' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+        <param name='embed_code_version' value='3' /> 
+        <param name='site_root' value=''/>
+        <param name='name' value='tasks_1_17582120934060/Sheet1' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='static_image' value='https://public.tableau.com/static/images/ta/tasks_1_17582120934060/Sheet1/1.png' /> 
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='yes' />
+        <param name='language' value='en-US' />
+        <param name='filter' value='publish=yes' />
+      </object>
+    </div>
+  </div>
+  <!-- Tableau Embed Code End -->
+
+  <!-- Closed message -->
+  <div id="closed">⏳ Dashboard available only between <br> <strong>3 PM – 5 PM IST</strong></div>
+
+  <script type='text/javascript'>
+    function checkTimeRestriction() {
+      const now = new Date();
+      const hour = now.getHours();
+
+      const dashboard = document.getElementById("dashboard");
+      const closed = document.getElementById("closed");
+
+      if (hour >= 15 && hour < 17) {
+        dashboard.style.display = "block";
+        closed.style.display = "none";
+
+        // Tableau script load inside time
+        var divElement = document.getElementById('viz1758212189865');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width='100%';
+        vizElement.style.height=(divElement.offsetWidth*0.65)+'px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+      } else {
+        dashboard.style.display = "none";
+        closed.style.display = "block";
+      }
+    }
+
+    // Check restriction when page loads
+    checkTimeRestriction();
+  </script>
+
+</body>
+</html>
