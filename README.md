@@ -50,4 +50,6 @@ This project visualizes **job descriptions dataset** with filters applied for in
 
 ## 🔗 Live Dashboard
 
-(https://sensational-pony-00b1af.netlify.app/)
+(https://nullclasstask01.netlify.app/)
+
+
